@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F2D0EFED-A9B0-4CD8-8799-8DCB0304E35E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MOSTplugin</RootNamespace>
+    <AssemblyName>MOSTplugin</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitTask, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RevitTask.3.0.0\lib\net47\RevitTask.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands.cs" />
+    <Compile Include="Auto_renambering_lists.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Auto_renambering_lists.Designer.cs">
+      <DependentUpon>Auto_renambering_lists.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Peremichki.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Peremichki.Designer.cs">
+      <DependentUpon>Peremichki.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="RevitApplication.cs" />
+    <Compile Include="Rename_views.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Rename_views.Designer.cs">
+      <DependentUpon>Rename_views.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkittingWall\SkitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SkittingWall\SkitForm.Designer.cs">
+      <DependentUpon>SkitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SkittingWall\SkittingWall_Class.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Auto_renambering_lists.resx">
+      <DependentUpon>Auto_renambering_lists.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Peremichki.resx">
+      <DependentUpon>Peremichki.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Rename_views.resx">
+      <DependentUpon>Rename_views.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SkittingWall\SkitForm.resx">
+      <DependentUpon>SkitForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\btn1_icon_80x80.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn1_icn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\btn1_icon_32x32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Microsoft.CSharp.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\PresentationCore.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\System.Data.DataSetExtensions.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\System.Data.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\System.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\System.Drawing.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\System.Net.Http.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\System.Windows.Forms.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\System.Xml.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\System.Xml.Linq.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\WindowsBase.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\RevitTask.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Логотип Мост. Синий. 300dpi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MOST_logo.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
