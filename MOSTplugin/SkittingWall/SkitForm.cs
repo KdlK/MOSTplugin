@@ -23,7 +23,9 @@ namespace MOSTplugin.SkittingWall
         {
             List<Element> rooms = SkittingWall_Class.roomCollector();
             List<Element> walls = SkittingWall_Class.SkittingWallCollector();
-
+            List<Element> walls = SkittingWall_Class.SkittingWallCollector();
+            List<Element> walls = SkittingWall_Class.SkittingWallCollector();
+            //тест
 
         }
     }
