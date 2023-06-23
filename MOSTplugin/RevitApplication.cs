@@ -68,7 +68,7 @@ namespace MOSTplugin
             Image check_img = Properties.Resources.img_SkittingWallBtn;
             ImageSource check_imgSRC = Convert(check_img);
             SkittingWall_btn.LargeImage = SkittingWall_imgSRC;
-            SkittingWall_panel.AddItem(SkittingWall_btn);
+            SkittingWall_panel.AddItem(check_btn);
 
 
 
