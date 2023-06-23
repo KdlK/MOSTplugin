@@ -89,6 +89,16 @@
     <Compile Include="Auto_renambering_lists.Designer.cs">
       <DependentUpon>Auto_renambering_lists.cs</DependentUpon>
     </Compile>
+    <Compile Include="LintelBeam\Class1.cs" />
+    <Compile Include="LintelBeam\Params.cs" />
+    <Compile Include="LintelBeam\LintelBeam.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LintelBeam\LintelBeam.Designer.cs">
+      <DependentUpon>LintelBeam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LintelBeam\Logic.cs" />
+    <Compile Include="LintelBeam\Model.cs" />
     <Compile Include="Peremichki.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +119,14 @@
       <DependentUpon>Rename_views.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkittingWall\SkittinWallForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SkittingWall\SkittinWallForm.Designer.cs">
+      <DependentUpon>SkittinWallForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SkittingWall\Logic.cs" />
+    <Compile Include="SkittingWall\Model.cs" />
     <Compile Include="SkittingWall\SkitForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,10 +134,14 @@
       <DependentUpon>SkitForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SkittingWall\SkittingWall_Class.cs" />
+    <Compile Include="SkittingWall\Tools.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Auto_renambering_lists.resx">
       <DependentUpon>Auto_renambering_lists.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LintelBeam\LintelBeam.resx">
+      <DependentUpon>LintelBeam.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Peremichki.resx">
       <DependentUpon>Peremichki.cs</DependentUpon>
@@ -130,6 +152,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SkittingWall\SkittinWallForm.resx">
+      <DependentUpon>SkittinWallForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SkittingWall\SkitForm.resx">
       <DependentUpon>SkitForm.cs</DependentUpon>
@@ -148,47 +173,20 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Debug\Microsoft.CSharp.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\PresentationCore.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\System.Data.DataSetExtensions.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\System.Data.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\System.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\System.Drawing.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\System.Net.Http.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\System.Windows.Forms.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\System.Xml.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\System.Xml.Linq.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\WindowsBase.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\RevitTask.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Логотип Мост. Синий. 300dpi.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MOST_logo.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+    <Folder Include="NewFolder1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgonline-com-ua-Resize-qLMJCnZkDXF7.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgonline-com-ua-Resize-XfGs5MrczK1B2.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

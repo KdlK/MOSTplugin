@@ -63,16 +63,6 @@ namespace MOSTplugin.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap btn1_icn {
-            get {
-                object obj = ResourceManager.GetObject("btn1_icn", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap btn1_icon_32x32 {
             get {
                 object obj = ResourceManager.GetObject("btn1_icon_32x32", resourceCulture);
@@ -86,6 +76,26 @@ namespace MOSTplugin.Properties {
         public static System.Drawing.Bitmap btn1_icon_80x80 {
             get {
                 object obj = ResourceManager.GetObject("btn1_icon_80x80", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap img_ListBtn {
+            get {
+                object obj = ResourceManager.GetObject("img_ListBtn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap img_SkittingWallBtn {
+            get {
+                object obj = ResourceManager.GetObject("img_SkittingWallBtn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

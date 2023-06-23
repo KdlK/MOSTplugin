@@ -51,7 +51,7 @@ namespace MOSTplugin
 
         }
 
-        private async void button2_Click(object sender, EventArgs e)
+        private async void btn_CreateSection_Click(object sender, EventArgs e)
         {
             await revitTask.Run(app =>
             {

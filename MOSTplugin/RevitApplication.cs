@@ -30,37 +30,45 @@ namespace MOSTplugin
         public Result OnStartup(UIControlledApplication application)
         {
             application.CreateRibbonTab(tab_name);
-            RibbonPanel ribbonpanel = application.CreateRibbonPanel(tab_name, panel_name);
+            RibbonPanel ribbonpanel = application.CreateRibbonPanel(tab_name, "Виды");
+            
+
             PushButtonData button_rename_views = new PushButtonData(nameof(Commands), "переименовать \n виды", assembly_path, typeof(Commands).FullName);
             Image img_button_rename_views = Properties.Resources.btn1_icon_32x32;
             ImageSource imgSRC_button_rename_views = Convert(img_button_rename_views);
             button_rename_views.LargeImage = imgSRC_button_rename_views;
             ribbonpanel.AddItem(button_rename_views);
 
-            RibbonPanel ribbonpanel2 = application.CreateRibbonPanel(tab_name, "TEST");
+            RibbonPanel ribbonpanel2 = application.CreateRibbonPanel(tab_name, "Листы");
             PushButtonData button_renumber_lists = new PushButtonData(nameof(Commands), "перенумеровать \n листы", assembly_path, typeof(Auto_numbering).FullName);
-            Image img_button_renumber_lists = Properties.Resources.btn1_icon_32x32;
+            Image img_button_renumber_lists = Properties.Resources.img_ListBtn;
             ImageSource imgSRC_button_renumber_lists = Convert(img_button_renumber_lists);
             button_renumber_lists.LargeImage = imgSRC_button_renumber_lists;
             ribbonpanel2.AddItem(button_renumber_lists);
-            
 
-            RibbonPanel ribbonpanel3 = application.CreateRibbonPanel(tab_name, "Перемычки");
-            PushButtonData button_peremichki = new PushButtonData(nameof(Commands), "перемычки", assembly_path, typeof(Peremichki_command).FullName);
-            Image img_button_peremichki = Properties.Resources.btn1_icon_32x32;
-            ImageSource imgSRC_button_peremichki = Convert(img_button_peremichki);
-            button_peremichki.LargeImage = imgSRC_button_peremichki;
-            ribbonpanel3.AddItem(button_peremichki);
-            ribbonpanel.AddSeparator();
+            /*
+                        RibbonPanel ribbonpanel3 = application.CreateRibbonPanel(tab_name, "Перемычки");
+                        PushButtonData button_peremichki = new PushButtonData(nameof(Commands), "перемычки", assembly_path, typeof(Peremichki_command).FullName);
+                        Image img_button_peremichki = Properties.Resources.btn1_icon_32x32;
+                        ImageSource imgSRC_button_peremichki = Convert(img_button_peremichki);
+                        button_peremichki.LargeImage = imgSRC_button_peremichki;
+                        ribbonpanel3.AddItem(button_peremichki);
+                        ribbonpanel.AddSeparator();*/
 
 
-            RibbonPanel SkittingWall_panel = application.CreateRibbonPanel(tab_name, "Отделка");
+            RibbonPanel SkittingWall_panel = application.CreateRibbonPanel(tab_name, "Архитектура");
             PushButtonData SkittingWall_btn = new PushButtonData(nameof(Commands), "Отделка", assembly_path, typeof(SkittingWall_command).FullName);
-            Image SkittingWaal_img = Properties.Resources.btn1_icon_32x32;
+            Image SkittingWaal_img = Properties.Resources.img_SkittingWallBtn;
             ImageSource SkittingWall_imgSRC = Convert(SkittingWaal_img);
             SkittingWall_btn.LargeImage = SkittingWall_imgSRC; 
             SkittingWall_panel.AddItem(SkittingWall_btn);
 
+            RibbonPanel check_panel = application.CreateRibbonPanel(tab_name, "проверка");
+            PushButtonData check_btn = new PushButtonData(nameof(Commands), "Отделка", assembly_path, typeof(check).FullName);
+            Image check_img = Properties.Resources.img_SkittingWallBtn;
+            ImageSource check_imgSRC = Convert(check_img);
+            SkittingWall_btn.LargeImage = SkittingWall_imgSRC;
+            SkittingWall_panel.AddItem(SkittingWall_btn);
 
 
 
