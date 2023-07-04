@@ -13,6 +13,7 @@ using MOSTplugin.SkittingWall;
 using MOSTplugin.LintelBeam;
 using System.Diagnostics;
 using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MOSTplugin
 {
@@ -129,26 +130,33 @@ namespace MOSTplugin
                 string otchet = "";
                 List<Element> linkedELs = (from linkedElem in linkedElems where linkedElem.Id.IntegerValue == El.Id.IntegerValue select linkedElem).ToList();
                 if (linkedELs.Count == 0)
-                    otchet = "новый элемент";
+                    otchet = "NEW";
                 else {
                     Element linkedEl = linkedELs.First();
-                    string El_OB = El.LookupParameter("Объем").AsValueString();
-                    string linkedEl_OB = linkedEl.LookupParameter("Объем").AsValueString();
-                    if (El_OB == linkedEl_OB && CheckLocation(El, linkedEl))
-                    {
-                        otchet = "элемент не изменялся";
-
-
+                    
+                    if( El.LookupParameter("Объем") != null ) 
+                    { 
+                        if (!CheckElementVolume(El,linkedEl))
+                        {
+                            otchet = String.Join("_", otchet, "V");
+                        }
                     }
-                    else
-                    {
-                        otchet = "элемент изменен";
-                        
-                    }
-                    El.LookupParameter("Комментарии").Set(otchet);
+                    if (!CheckLocation(El, linkedEl)) {
 
+                        otchet = String.Join("_", otchet, "L");
+                    }
+                    if (!CheckBB(El, linkedEl)) {
+                        otchet = String.Join("_",otchet, "B");
+                    }
+                    
                 }
-
+                if (otchet != "")
+                    otchet = otchet.Substring(1, otchet.Count() - 1);
+                if (El.LookupParameter("М_СравнениеВерсий") != null) {
+                    El.LookupParameter("М_СравнениеВерсий").Set(otchet);
+                    //CreateSampleSharedParameters(El.Category);
+                }
+                
 
             }
             t.Commit();
@@ -158,12 +166,21 @@ namespace MOSTplugin
         {
             List<Element> karkas = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralFraming).WhereElementIsNotElementType().ToElements().ToList();
             List<Element> columns = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns).WhereElementIsNotElementType().ToElements().ToList();
+            List<Element> elems = new FilteredElementCollector(doc).WhereElementIsNotElementType().ToElements().ToList();
             List<Element> s = new List<Element>();
-            s = s.Union(karkas).ToList();
-            s = s.Union(columns).ToList();
+            s = columns;
+            //s = s.Concat(columns).ToList();
+            
 
 
-            return s;
+            return elems;
+        }
+        public bool CheckElementVolume(Element El1, Element El2) {
+            string El1_volume = El1.LookupParameter("Объем").AsValueString();
+            string El2_volume = El2.LookupParameter("Объем").AsValueString();
+            if (El1_volume == El2_volume)
+                return true;
+            else return false;
         }
         public bool CheckLocation(Element el1,Element  el2) {
             //if (Category.GetCategory(Data.Doc, el1.Id).Id.IntegerValue == -201330)
@@ -177,7 +194,8 @@ namespace MOSTplugin
                     return false;
 
             }
-            else {
+            else if ((el1.Location as LocationCurve) != null)
+            {
                 XYZ el1_Point = ((el1.Location as LocationCurve).Curve as Line).Origin;
                 XYZ el2_Point = ((el2.Location as LocationCurve).Curve as Line).Origin;
                 if (el1_Point.X == el2_Point.X && el1_Point.Y == el2_Point.Y && el1_Point.Z == el2_Point.Z)
@@ -186,6 +204,86 @@ namespace MOSTplugin
                     return false;
 
 
+            }
+            else {
+                return true;
+            
+            }
+            
+        }
+        public bool CheckBB(Element el1, Element el2) {
+            BoundingBoxXYZ element1_BB = el1.get_BoundingBox(null);
+            BoundingBoxXYZ element2_BB = el2.get_BoundingBox(null);
+            if (element1_BB != null || element1_BB != null)
+            {
+                XYZ element1_BB_Min = element1_BB.Min;
+                XYZ element1_BB_Max = element1_BB.Max;
+
+                XYZ element2_BB_Min = element2_BB.Min;
+                XYZ element2_BB_Max = element2_BB.Max;
+
+                if (element1_BB_Min.X == element2_BB_Min.X && element1_BB_Min.Y == element2_BB_Min.Y && element1_BB_Min.Z == element2_BB_Min.Z
+                    && element1_BB_Max.X == element2_BB_Max.X && element1_BB_Max.Y == element2_BB_Max.Y && element1_BB_Max.Z == element2_BB_Max.Z)
+                {
+                    return true;
+                }
+                else return false;
+            }
+            else return true;
+
+
+
+            
+        }
+        public void CreateSampleSharedParameters(Category cat)
+        {
+            Category category = cat;
+            CategorySet categorySet = Data.App.Create.NewCategorySet();
+            categorySet.Insert(category);
+
+            string originalFile = Data.App.SharedParametersFilename;
+            string tempFile = @"I:\Most_OTIM\1_ПГС\1_3_Библиотека_Общая\1_3_1-ФОП_Общие_параметры\FP-MST-S2-ФОП_v1.txt";
+
+            try
+            {
+                Data.App.SharedParametersFilename = tempFile;
+
+                DefinitionFile sharedParameterFile = Data.App.OpenSharedParameterFile();
+
+                foreach (DefinitionGroup dg in sharedParameterFile.Groups)
+                {
+                    if (dg.Name == "009_Мст_BIM")
+                    {
+                        ExternalDefinition externalDefinition = dg.Definitions.get_Item("М_СравнениеВерсий") as ExternalDefinition;
+
+                       
+                        
+                        
+                        InstanceBinding newIB = Data.App.Create.NewInstanceBinding(categorySet);
+                        Data.Doc.ParameterBindings.Insert(externalDefinition, newIB, BuiltInParameterGroup.PG_TEXT);
+                        
+                        
+                        
+                    }
+                }
+            }
+            catch { }
+            finally
+            {
+                
+
+               
+                FilteredElementCollector collector  = new FilteredElementCollector(Data.Doc)
+                                                     .WhereElementIsNotElementType()
+                                                     .OfClass(typeof(SharedParameterElement));
+                foreach (Element e in collector)
+                {
+                    SharedParameterElement param = e as SharedParameterElement;
+                    InternalDefinition def = param.GetDefinition();
+                   
+
+                   
+                }
             }
         }
     }

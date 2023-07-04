@@ -53,7 +53,8 @@ namespace MOSTplugin
                         ImageSource imgSRC_button_peremichki = Convert(img_button_peremichki);
                         button_peremichki.LargeImage = imgSRC_button_peremichki;
                         ribbonpanel3.AddItem(button_peremichki);
-                        ribbonpanel.AddSeparator();*/
+                        ribbonpanel.AddSeparator();
+            */
 
 
             RibbonPanel SkittingWall_panel = application.CreateRibbonPanel(tab_name, "Архитектура");
@@ -67,8 +68,8 @@ namespace MOSTplugin
             PushButtonData check_btn = new PushButtonData(nameof(Commands), "Отделка", assembly_path, typeof(check).FullName);
             Image check_img = Properties.Resources.img_SkittingWallBtn;
             ImageSource check_imgSRC = Convert(check_img);
-            SkittingWall_btn.LargeImage = SkittingWall_imgSRC;
-            SkittingWall_panel.AddItem(check_btn);
+            SkittingWall_btn.LargeImage = check_imgSRC;
+            check_panel.AddItem(check_btn);
 
 
 
