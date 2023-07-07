@@ -62,7 +62,7 @@ namespace MOSTplugin.LintelBeam
                     }
                     else
                         SectionStatus = "Разрез не соответствует";
-
+                        
                     break;
                 }
             }
