@@ -14,6 +14,7 @@ using MOSTplugin.LintelBeam;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
+using System.Windows.Forms.VisualStyles;
 
 namespace MOSTplugin
 {
@@ -122,58 +123,127 @@ namespace MOSTplugin
             {
                 if (d.IsLinked)
                 {
-                    linkedElems = ElCollector(d);
+                    linkedElems = new FilteredElementCollector(d).WhereElementIsNotElementType().ToElements().ToList();
+
                 }
             }
-            elems = ElCollector(Data.Doc);
-            foreach (Element El in elems) {
-                string otchet = "";
-                List<Element> linkedELs = (from linkedElem in linkedElems where linkedElem.Id.IntegerValue == El.Id.IntegerValue select linkedElem).ToList();
-                if (linkedELs.Count == 0)
-                    otchet = "NEW";
-                else {
-                    Element linkedEl = linkedELs.First();
-                    
-                    if( El.LookupParameter("Объем") != null ) 
-                    { 
-                        if (!CheckElementVolume(El,linkedEl))
+            elems = ElementCollector(Data.Doc);
+            if (elems.Count() != 0)
+            {
+                foreach (Element El in elems)
+                {
+                    string otchet = "";
+                    List<Element> linkedELs = (from linkedElem in linkedElems where linkedElem.Id.IntegerValue == El.Id.IntegerValue select linkedElem).ToList();
+                    if (linkedELs.Count == 0)
+                        otchet = "NEW";
+                    else
+                    {
+                        Element linkedEl = linkedELs.First();
+
+                        if (El.LookupParameter("Объем") != null)
                         {
-                            otchet = String.Join("_", otchet, "V");
+                            if (!CheckElementVolume(El, linkedEl))
+                            {
+                                otchet = String.Join("_", otchet, "V");
+                            }
                         }
-                    }
-                    if (!CheckLocation(El, linkedEl)) {
+                        if (!CheckLocation(El, linkedEl))
+                        {
 
-                        otchet = String.Join("_", otchet, "L");
-                    }
-                    if (!CheckBB(El, linkedEl)) {
-                        otchet = String.Join("_",otchet, "B");
-                    }
-                    
-                }
-                if (otchet != "")
-                    otchet = otchet.Substring(1, otchet.Count() - 1);
-                if (El.LookupParameter("М_СравнениеВерсий") != null) {
-                    El.LookupParameter("М_СравнениеВерсий").Set(otchet);
-                    //CreateSampleSharedParameters(El.Category);
-                }
-                
+                            otchet = String.Join("_", otchet, "L");
+                        }
+                        if (!CheckBB(El, linkedEl))
+                        {
+                            otchet = String.Join("_", otchet, "B");
+                        }
 
+                    }
+                    if (otchet != "" && otchet != "NEW")
+                        otchet = otchet.Substring(1, otchet.Count() - 1);
+                    if (El.LookupParameter("М_СравнениеВерсий") != null)
+                    {
+                        El.LookupParameter("М_СравнениеВерсий").Set(otchet);
+                        //CreateSampleSharedParameters(El.Category);
+                    }
+
+
+                }
             }
+            else
+                MessageBox.Show("Параметр М_СравнениеВерсий не загружен в проект или не выбраны категории");
             t.Commit();
             return Result.Succeeded;
         }
+        public List<Element> ElementCollector(Document doc) {
+            
+            List<Element> ElementList = new List<Element>();
+            Categories categories = Data.Doc.Settings.Categories;
+            foreach (Category cat in categories) { 
+                List<Element> elements = new List<Element>();
+                elements = new FilteredElementCollector(doc).WhereElementIsNotElementType().OfCategoryId(cat.Id).ToElements().ToList();
+                if (elements.Count() != 0) {
+                    if (elements.First().LookupParameter("М_СравнениеВерсий") != null)
+                    {
+                        ElementList.AddRange(elements);
+                    }
+                    else
+                        continue;
+
+
+                }
+                else
+                    continue;
+            
+            }
+
+            return ElementList;
+
+        
+        }
         public List<Element> ElCollector(Document doc)
         {
-            List<Element> karkas = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralFraming).WhereElementIsNotElementType().ToElements().ToList();
-            List<Element> columns = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns).WhereElementIsNotElementType().ToElements().ToList();
-            List<Element> elems = new FilteredElementCollector(doc).WhereElementIsNotElementType().ToElements().ToList();
-            List<Element> s = new List<Element>();
-            s = columns;
-            //s = s.Concat(columns).ToList();
+            
+            List<Category> CategoryList = new List<Category>();
+            List<Element> ElementList = new List<Element>();
+            BindingMap maps = doc.ParameterBindings;
+
+            DefinitionBindingMapIterator iterator = maps.ForwardIterator();
+            ///iterator.Reset();
+            while (iterator.MoveNext()) { 
+                InternalDefinition def = iterator.Key as InternalDefinition;
+                if (def.Name.Equals("М_СравнениеВерсий")) {
+                    CategorySet cat = (iterator.Current as ElementBinding).Categories;
+                    CategorySetIterator cat_iter = cat.ForwardIterator();
+                    cat_iter.Reset();
+                    while (cat_iter.MoveNext()) {
+                        CategoryList.Add(cat_iter.Current as Category);
+                    
+                    }
+
+                    break;
+                }
+            
+            }
+            if (CategoryList.Count() != 0)
+            {
+                foreach (Category c in CategoryList)
+                {
+                    ElementList.AddRange(new FilteredElementCollector(doc).OfCategoryId(c.Id).WhereElementIsNotElementType().ToElements().ToList());
+                    
+                }
+
+                return ElementList;
+            }
+            else {
+                MessageBox.Show("параметр М_СравнениеВерсий не загружен в проект или не выбраны кате");
+                return null;
+            }
+           
+     
             
 
 
-            return elems;
+       
         }
         public bool CheckElementVolume(Element El1, Element El2) {
             string El1_volume = El1.LookupParameter("Объем").AsValueString();
@@ -214,7 +284,7 @@ namespace MOSTplugin
         public bool CheckBB(Element el1, Element el2) {
             BoundingBoxXYZ element1_BB = el1.get_BoundingBox(null);
             BoundingBoxXYZ element2_BB = el2.get_BoundingBox(null);
-            if (element1_BB != null || element1_BB != null)
+            if (element1_BB != null && element1_BB != null)
             {
                 XYZ element1_BB_Min = element1_BB.Min;
                 XYZ element1_BB_Max = element1_BB.Max;
@@ -235,57 +305,64 @@ namespace MOSTplugin
 
             
         }
-        public void CreateSampleSharedParameters(Category cat)
-        {
-            Category category = cat;
-            CategorySet categorySet = Data.App.Create.NewCategorySet();
-            categorySet.Insert(category);
+        //public void CreateSampleSharedParameters(Category cat)
+        //{
+        //    Category category = cat;
+        //    CategorySet categorySet = Data.App.Create.NewCategorySet();
+        //    categorySet.Insert(category);
 
-            string originalFile = Data.App.SharedParametersFilename;
-            string tempFile = @"I:\Most_OTIM\1_ПГС\1_3_Библиотека_Общая\1_3_1-ФОП_Общие_параметры\FP-MST-S2-ФОП_v1.txt";
+        //    string originalFile = Data.App.SharedParametersFilename;
+        //    string tempFile = @"I:\Most_OTIM\1_ПГС\1_3_Библиотека_Общая\1_3_1-ФОП_Общие_параметры\FP-MST-S2-ФОП_v1.txt";
 
-            try
-            {
-                Data.App.SharedParametersFilename = tempFile;
+        //    try
+        //    {
+        //        Data.App.SharedParametersFilename = tempFile;
 
-                DefinitionFile sharedParameterFile = Data.App.OpenSharedParameterFile();
+        //        DefinitionFile sharedParameterFile = Data.App.OpenSharedParameterFile();
 
-                foreach (DefinitionGroup dg in sharedParameterFile.Groups)
-                {
-                    if (dg.Name == "009_Мст_BIM")
-                    {
-                        ExternalDefinition externalDefinition = dg.Definitions.get_Item("М_СравнениеВерсий") as ExternalDefinition;
+        //        foreach (DefinitionGroup dg in sharedParameterFile.Groups)
+        //        {
+        //            if (dg.Name == "009_Мст_BIM")
+        //            {
+        //                ExternalDefinition externalDefinition = dg.Definitions.get_Item("М_СравнениеВерсий") as ExternalDefinition;
 
                        
                         
                         
-                        InstanceBinding newIB = Data.App.Create.NewInstanceBinding(categorySet);
-                        Data.Doc.ParameterBindings.Insert(externalDefinition, newIB, BuiltInParameterGroup.PG_TEXT);
+        //                InstanceBinding newIB = Data.App.Create.NewInstanceBinding(categorySet);
+        //                Data.Doc.ParameterBindings.Insert(externalDefinition, newIB, BuiltInParameterGroup.PG_TEXT);
                         
                         
                         
-                    }
-                }
-            }
-            catch { }
-            finally
-            {
+        //            }
+        //        }
+        //    }
+        //    catch { }
+        //    finally
+        //    {
                 
 
                
-                FilteredElementCollector collector  = new FilteredElementCollector(Data.Doc)
-                                                     .WhereElementIsNotElementType()
-                                                     .OfClass(typeof(SharedParameterElement));
-                foreach (Element e in collector)
-                {
-                    SharedParameterElement param = e as SharedParameterElement;
-                    InternalDefinition def = param.GetDefinition();
+        //        FilteredElementCollector collector  = new FilteredElementCollector(Data.Doc)
+        //                                             .WhereElementIsNotElementType()
+        //                                             .OfClass(typeof(InternalDefinition));
+        //        BindingMap map = Data.Doc.ParameterBindings;
+        //        InternalDefinition internalDefinition = map
+        //        foreach (InternalDefinition def in (from a in )) {
+                    
+                
+                
+        //        }
+        //        foreach (Element e in collector)
+        //        {
+        //            SharedParameterElement param = e as SharedParameterElement;
+        //            InternalDefinition def = param.GetDefinition();
                    
 
                    
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
     }
 
    

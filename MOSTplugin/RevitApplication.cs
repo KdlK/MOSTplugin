@@ -64,11 +64,11 @@ namespace MOSTplugin
             SkittingWall_btn.LargeImage = SkittingWall_imgSRC; 
             SkittingWall_panel.AddItem(SkittingWall_btn);
 
-            RibbonPanel check_panel = application.CreateRibbonPanel(tab_name, "проверка");
-            PushButtonData check_btn = new PushButtonData(nameof(Commands), "Отделка", assembly_path, typeof(check).FullName);
+            RibbonPanel check_panel = application.CreateRibbonPanel(tab_name, "BIM");
+            PushButtonData check_btn = new PushButtonData(nameof(Commands), "Проверка", assembly_path, typeof(check).FullName);
             Image check_img = Properties.Resources.img_SkittingWallBtn;
             ImageSource check_imgSRC = Convert(check_img);
-            SkittingWall_btn.LargeImage = check_imgSRC;
+            check_btn.LargeImage = check_imgSRC;
             check_panel.AddItem(check_btn);
 
 
