@@ -163,7 +163,7 @@ namespace MOSTplugin
                     if (El.LookupParameter("М_СравнениеВерсий") != null)
                     {
                         El.LookupParameter("М_СравнениеВерсий").Set(otchet);
-                        //CreateSampleSharedParameters(El.Category);
+                        
                     }
 
 
