@@ -63,6 +63,16 @@ namespace MOSTplugin.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap btn1_icn {
+            get {
+                object obj = ResourceManager.GetObject("btn1_icn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap btn1_icon_32x32 {
             get {
                 object obj = ResourceManager.GetObject("btn1_icon_32x32", resourceCulture);
@@ -76,6 +86,26 @@ namespace MOSTplugin.Properties {
         public static System.Drawing.Bitmap btn1_icon_80x80 {
             get {
                 object obj = ResourceManager.GetObject("btn1_icon_80x80", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ImageNotExists {
+            get {
+                object obj = ResourceManager.GetObject("ImageNotExists", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ImageToUpdate {
+            get {
+                object obj = ResourceManager.GetObject("ImageToUpdate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -116,6 +146,16 @@ namespace MOSTplugin.Properties {
         public static System.Drawing.Bitmap MOST_logo {
             get {
                 object obj = ResourceManager.GetObject("MOST_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap photo_2023_10_19_13_33_58__1_ {
+            get {
+                object obj = ResourceManager.GetObject("photo_2023_10_19_13_33_58__1_", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -217,6 +257,16 @@ namespace MOSTplugin.Properties {
             get {
                 object obj = ResourceManager.GetObject("System_Xml_Linq", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Template {
+            get {
+                object obj = ResourceManager.GetObject("Template", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

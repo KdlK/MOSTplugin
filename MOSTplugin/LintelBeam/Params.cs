@@ -6,8 +6,28 @@ using System.Threading.Tasks;
 
 namespace MOSTplugin.LintelBeam
 {
-    internal class Params
+    public static class Params
     {
+
+
+        public static Dictionary<string, TableFormatSizes> FormatSizes = new Dictionary<string, TableFormatSizes>() { 
+            { "Мелкие", new TableFormatSizes(50,100) },
+            { "Средние", new TableFormatSizes(60,120) },
+            { "Большие", new TableFormatSizes(150,300) },
+            { "Бошие", new TableFormatSizes(150,300) },
+
+
+
+        };
+        public static string selectedImageSize = null;
+        
+        
+
+        
+        
+        
+        
+
         public static string MarkParameterName = "ADSK_Марка";//Параметр, в котором хранится марка перемычки
         public static string CodeParameterName = "Комментарии"; //Параметр, в котором хранится код перемычки
         public static string PMotherParameterName = "Группа модели"; //Название параметра, который отличает Составную перемычку от вложенных перемычек
@@ -22,5 +42,16 @@ namespace MOSTplugin.LintelBeam
         public static string LenghtParameterName = "ADSK_Размер_Длина";
         public static string IndentParameterName = "М_Перемычка_Отступ_фасадный";
         public static string OffsetParameterName = "М_Четверть_Разрез_Размер";
+    }
+
+    public struct TableFormatSizes
+    {
+        public int height;
+        public int width;
+        public TableFormatSizes(int height, int width)
+        {
+            this.height = height;
+            this.width = width;
+        }
     }
 }

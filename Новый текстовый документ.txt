@@ -1,0 +1,3 @@
+<data name="Microsoft_CSharp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Microsoft.CSharp.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>

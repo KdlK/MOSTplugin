@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms.VisualStyles;
+using Form = System.Windows.Forms.Form;
 
 namespace MOSTplugin
 {
@@ -84,10 +85,11 @@ namespace MOSTplugin
     [Transaction(TransactionMode.Manual)]
     public class Peremichki_command : IExternalCommand
     {
+        
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             Data.CommandData = commandData;
-            LintelBeam.LintelBeam Form = new LintelBeam.LintelBeam();
+            Form Form = new LintelBeam.LintelBeam();
             //Peremichki form = new Peremichki();
             return Result.Succeeded;
         }
@@ -235,7 +237,7 @@ namespace MOSTplugin
                 return ElementList;
             }
             else {
-                MessageBox.Show("параметр М_СравнениеВерсий не загружен в проект или не выбраны кате");
+                MessageBox.Show("параметр М_СравнениеВерсий не загружен в проект или не выбраны категории");
                 return null;
             }
            
@@ -248,7 +250,10 @@ namespace MOSTplugin
         public bool CheckElementVolume(Element El1, Element El2) {
             string El1_volume = El1.LookupParameter("Объем").AsValueString();
             string El2_volume = El2.LookupParameter("Объем").AsValueString();
-            if (El1_volume == El2_volume)
+            
+            float El1_volume_digit = float.Parse(El1_volume.Split(' ').First().Replace(',','.'),CultureInfo.InvariantCulture.NumberFormat);
+            float El2_volume_digit = float.Parse(El2_volume.Split(' ').First().Replace(',','.'),CultureInfo.InvariantCulture.NumberFormat);
+            if (Math.Abs(El1_volume_digit - El2_volume_digit) < 0.001)
                 return true;
             else return false;
         }
@@ -258,7 +263,7 @@ namespace MOSTplugin
             {
                 XYZ el1_Point = (el1.Location as LocationPoint).Point;
                 XYZ el2_Point = (el2.Location as LocationPoint).Point;
-                if (el1_Point.X == el2_Point.X && el1_Point.Y == el2_Point.Y && el1_Point.Z == el2_Point.Z)
+                if (Math.Abs(el1_Point.X - el2_Point.X) < 0.1 && Math.Abs(el1_Point.Y - el2_Point.Y) < 0.1 && (el1_Point.Z - el2_Point.Z) < 0.1)
                     return true;
                 else
                     return false;
@@ -268,7 +273,7 @@ namespace MOSTplugin
             {
                 XYZ el1_Point = ((el1.Location as LocationCurve).Curve as Line).Origin;
                 XYZ el2_Point = ((el2.Location as LocationCurve).Curve as Line).Origin;
-                if (el1_Point.X == el2_Point.X && el1_Point.Y == el2_Point.Y && el1_Point.Z == el2_Point.Z)
+                if (Math.Abs(el1_Point.X - el2_Point.X)< 0.1 && Math.Abs(el1_Point.Y -el2_Point.Y)< 0.1 && (el1_Point.Z -el2_Point.Z)< 0.1)
                     return true;
                 else
                     return false;
@@ -292,8 +297,9 @@ namespace MOSTplugin
                 XYZ element2_BB_Min = element2_BB.Min;
                 XYZ element2_BB_Max = element2_BB.Max;
 
-                if (element1_BB_Min.X == element2_BB_Min.X && element1_BB_Min.Y == element2_BB_Min.Y && element1_BB_Min.Z == element2_BB_Min.Z
-                    && element1_BB_Max.X == element2_BB_Max.X && element1_BB_Max.Y == element2_BB_Max.Y && element1_BB_Max.Z == element2_BB_Max.Z)
+                if (Math.Abs(element1_BB_Min.X - element2_BB_Min.X)< 0.1 && Math.Abs(element1_BB_Min.Y - element2_BB_Min.Y) < 0.1 && Math.Abs(element1_BB_Min.Z - element2_BB_Min.Z) < 0.1
+                    && Math.Abs(element1_BB_Max.X - element2_BB_Max.X) < 0.1 && Math.Abs(element1_BB_Max.Y - element2_BB_Max.Y) < 0.1 && Math.Abs(element1_BB_Max.Z - element2_BB_Max.Z) < 0.1)
+
                 {
                     return true;
                 }

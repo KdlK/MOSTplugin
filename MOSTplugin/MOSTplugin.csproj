@@ -31,9 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="RevitAPI">
       <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
       <Private>False</Private>
@@ -90,6 +88,7 @@
       <DependentUpon>Auto_renambering_lists.cs</DependentUpon>
     </Compile>
     <Compile Include="LintelBeam\Class1.cs" />
+    <Compile Include="LintelBeam\ErrorReview.cs" />
     <Compile Include="LintelBeam\Params.cs" />
     <Compile Include="LintelBeam\LintelBeam.cs">
       <SubType>Form</SubType>
@@ -99,6 +98,12 @@
     </Compile>
     <Compile Include="LintelBeam\Logic.cs" />
     <Compile Include="LintelBeam\Model.cs" />
+    <Compile Include="LintelBeam\Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LintelBeam\Settings.Designer.cs">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Peremichki.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,7 +114,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="RevitApplication.cs" />
     <Compile Include="Rename_views.cs">
@@ -143,6 +147,9 @@
     <EmbeddedResource Include="LintelBeam\LintelBeam.resx">
       <DependentUpon>LintelBeam.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LintelBeam\Settings.resx">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Peremichki.resx">
       <DependentUpon>Peremichki.cs</DependentUpon>
     </EmbeddedResource>
@@ -151,6 +158,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SkittingWall\SkittinWallForm.resx">
@@ -187,6 +195,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\imgonline-com-ua-Resize-XfGs5MrczK1B2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-изображение-недоступно-48 %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-обновить-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\photo_2023-10-19_13-33-58.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\photo_2023-10-19_13-33-58 %281%29.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
