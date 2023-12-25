@@ -16,6 +16,8 @@ using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms.VisualStyles;
 using Form = System.Windows.Forms.Form;
+using MOSTplugin.DoorManager;
+using Model = MOSTplugin.DoorManager.Model;
 
 namespace MOSTplugin
 {
@@ -33,6 +35,7 @@ namespace MOSTplugin
             get { 
                 return _commandData;
             }
+
             set {
                 _commandData = value;
                 _appUI  = _commandData.Application;
@@ -104,7 +107,18 @@ namespace MOSTplugin
             Data.CommandData = commandData;
             Data.Message = message;
             SkittingWall.SkittinWallForm form = new SkittingWall.SkittinWallForm();
-            
+
+            return Result.Succeeded;
+        }
+    }
+    [Transaction(TransactionMode.Manual)]
+    public class DoorManager_command : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            Data.CommandData = commandData;
+            DoorManager.WindowsManagerForm Form = new DoorManager.WindowsManagerForm();
+
             return Result.Succeeded;
         }
     }

@@ -9,6 +9,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +18,7 @@ using Color = System.Drawing.Color;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
+using Warning = MOSTplugin.LintelBeam.WarningForm;
 
 namespace MOSTplugin.LintelBeam
 {
@@ -31,10 +34,18 @@ namespace MOSTplugin.LintelBeam
 
         private const int cGrip = 16;      // Grip size
         private const int cCaption = 32;   // Caption bar height;
-        
+
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
 
 
-            
+
+
 
         public LintelBeam()
         {
@@ -58,19 +69,13 @@ namespace MOSTplugin.LintelBeam
             {
                 
                 
-                Errors = new ErrorReview(ModelList);
-                btn_CreateSectionView.Enabled = Errors.NoSection_btn_enabled;
-                btn_RefreshSectionView.Enabled = Errors.SectionInvalid_btn_enabled;
-               
-                label_NoSection.Text = Errors.NoSectionReview;
-                label_NoSection.ForeColor = Errors.NoSectionColor;
-
-                label_SectionInvalid.Text = Errors.SectionInvalidReview;
-                label_SectionInvalid.ForeColor = Errors.SectionInvalidColor;
+                
                 
 
 
+                
                 refresh();
+                
 
             });
         }
@@ -87,10 +92,24 @@ namespace MOSTplugin.LintelBeam
         private void refresh() {
             Params.selectedImageSize = this.comboBox1.SelectedItem.ToString();
             ModelList = Logic.CreateModelList().OrderBy(g => g.code).ToList();
+            ///// начало проверки
+            Errors = new ErrorReview(ModelList);
+            btn_CreateSectionView.Enabled = Errors.NoSection_btn_enabled;
+            btn_RefreshSectionView.Enabled = Errors.SectionInvalid_btn_enabled;
+
+            label_NoSection.Text = Errors.NoSectionReview;
+            label_NoSection.ForeColor = Errors.NoSectionColor;
+
+            label_SectionInvalid.Text = Errors.SectionInvalidReview;
+            label_SectionInvalid.ForeColor = Errors.SectionInvalidColor;
+
+            label_SectionInvalid.Location = new Point(label_SectionInvalid.Left, label_NoSection.Bottom + 5);
+            /// Panel проверка
             dataGridView1.Rows.Clear();
             string list_value = comboBox1.SelectedItem.ToString();
             dataGridView1.RowTemplate.Height = Params.FormatSizes[list_value].height;
             dataGridView1.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            
 
             dataGridView1.Columns[5].Width = Params.FormatSizes[list_value].width;
             
@@ -127,58 +146,80 @@ namespace MOSTplugin.LintelBeam
 
         async private void btn_CreateSection_Click(object sender, EventArgs e)
         {
-           
-            await revitTask.Run(app =>
+            try
             {
-                
-                Transaction t = new Transaction(Data.Doc,"go");
-                t.Start();
-                
-                foreach (Model model in Errors.NoSectionList) {
-                    
-                    Logic.CreateSectionView(model);
-                    
-                }
-                t.Commit();
-            });
-            btn_CreateSectionView.Enabled = false;
-            
+                await revitTask.Run(app =>
+                {
+
+                    Transaction t = new Transaction(Data.Doc, "go");
+                    t.Start();
+
+                    foreach (Model model in Errors.NoSectionList)
+                    {
+
+                        Logic.CreateSectionView(model);
+
+                    }
+                    t.Commit();
+                });
+                btn_CreateSectionView.Enabled = false;
+                refresh();
+            }
+            catch {
+                Warning FormWarning = new Warning();
+                FormWarning.ShowDialog();
+            }
         }
 
         async private void btn_CreateImegeView_Click(object sender, EventArgs e)
         {
-            await revitTask.Run(app =>
+            try
             {
-                
-                foreach (Model model in ModelList) {
-                    Logic.CreateViewImage(model);
-                    Logic.SaveViewImage(model); 
-                    
+                await revitTask.Run(app =>
+                {
 
-                }
-                
+                    foreach (Model model in ModelList)
+                    {
+                        Logic.CreateViewImage(model);
+                        Logic.SaveViewImage(model);
 
-            });
+
+                    }
+
+
+                });
+            }
+            catch {
+                Warning FormWarning = new Warning();
+                FormWarning.ShowDialog();
+            }
         }
 
        
 
         private async void btn_RefreshSectionView_Click(object sender, EventArgs e)
         {
-            await revitTask.Run(app =>
+            try
             {
-
-                Transaction t = new Transaction(Data.Doc, "go");
-                t.Start();
-
-                foreach (Model model in Errors.SectionInvalidList)
+                await revitTask.Run(app =>
                 {
 
-                    Logic.CreateSectionView(model);
+                    Transaction t = new Transaction(Data.Doc, "go");
+                    t.Start();
 
-                }
-                t.Commit();
-            });
+                    foreach (Model model in Errors.SectionInvalidList)
+                    {
+
+                        Logic.CreateSectionView(model);
+
+                    }
+                    t.Commit();
+                });
+            }
+            catch {
+                Warning FormWarning = new Warning();
+                FormWarning.ShowDialog();
+            }
         }
 
         private async void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -231,25 +272,62 @@ namespace MOSTplugin.LintelBeam
 
         private async void btn_Remark_Click(object sender, EventArgs e)
         {
-            if (Rbtn_Mark_Auto.Checked) {
-                int counter = 1;
-                foreach (DataGridViewRow row in dataGridView1.Rows) {
-                    row.Cells[2].Value = "ПР-" + counter.ToString();
-                    counter++;
-                }
-            
-            }
-            await revitTask.Run(app =>
+            try
             {
-                Transaction t = new Transaction(Data.Doc,"Обновление марки");
-                t.Start();
-                for (int i = 0; i < ModelList.Count(); i++) {
-                    ModelList[i].Mark = dataGridView1[2, i].Value.ToString();
-                }
-                t.Commit();
+                await revitTask.Run(app =>
+                {
+                    Transaction t = new Transaction(Data.Doc, "Обновление марки");
+                    t.Start();
+                    if (Rbtn_Mark_Auto.Checked)
+                    {
 
 
-            });
+                        int counter = 0;
+                        foreach (DataGridViewRow row in dataGridView1.Rows)
+                        {
+                            if (StoredMarks.CodeList.Contains(row.Cells[1].Value.ToString()) == true)
+                            {
+                                row.Cells[2].Value = StoredMarks.StoredCodeMarkPairs[row.Cells[1].Value.ToString()];
+                            }
+                            else
+                            {
+
+                                while (true)
+                                {
+                                    counter++;
+                                    string generatedMark = "ПР-" + counter.ToString();
+                                    if (!StoredMarks.MarkList.Contains(generatedMark))
+                                    {
+
+                                        row.Cells[2].Value = generatedMark;
+                                        StoredMarks.InsertPair(row.Cells[1].Value.ToString(), row.Cells[2].Value.ToString());
+
+                                        break;
+                                    }
+
+                                }
+
+                            }
+
+
+                        }
+                    }
+
+
+                    for (int i = 0; i < ModelList.Count(); i++)
+                    {
+                        ModelList[i].Mark = dataGridView1[2, i].Value.ToString();
+
+                    }
+                    t.Commit();
+
+
+                });
+            }
+            catch {
+                Warning FormWarning = new Warning();
+                FormWarning.ShowDialog();
+            }
 
         }
 
@@ -304,7 +382,6 @@ namespace MOSTplugin.LintelBeam
                 {
                     row.Selected = true;
                     
-                    
                 }
                 else
                     row.Selected = false;
@@ -321,6 +398,15 @@ namespace MOSTplugin.LintelBeam
                     dataGridView1.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.LightGray;
                 }
             
+        }
+
+        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
         }
     }
 }

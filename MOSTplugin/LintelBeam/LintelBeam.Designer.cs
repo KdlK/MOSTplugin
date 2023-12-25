@@ -31,9 +31,16 @@ namespace MOSTplugin.LintelBeam
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ItemSelection = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Mark = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SectionStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_Check = new System.Windows.Forms.Button();
             this.btn_CreateSectionView = new System.Windows.Forms.Button();
             this.btn_CreateViewImage = new System.Windows.Forms.Button();
@@ -53,18 +60,11 @@ namespace MOSTplugin.LintelBeam
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.скопироватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ItemSelection = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Mark = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SectionStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -92,14 +92,14 @@ namespace MOSTplugin.LintelBeam
             this.SectionStatus,
             this.ImageColumn,
             this.Column1});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
@@ -114,6 +114,62 @@ namespace MOSTplugin.LintelBeam
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            // 
+            // ItemSelection
+            // 
+            this.ItemSelection.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ItemSelection.FillWeight = 77.92208F;
+            this.ItemSelection.HeaderText = "";
+            this.ItemSelection.Name = "ItemSelection";
+            this.ItemSelection.Width = 20;
+            // 
+            // Code
+            // 
+            this.Code.FillWeight = 105.5195F;
+            this.Code.HeaderText = "Код";
+            this.Code.Name = "Code";
+            this.Code.ReadOnly = true;
+            // 
+            // Mark
+            // 
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            this.Mark.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Mark.FillWeight = 105.5195F;
+            this.Mark.HeaderText = "Марка";
+            this.Mark.Name = "Mark";
+            // 
+            // Count
+            // 
+            this.Count.FillWeight = 105.5195F;
+            this.Count.HeaderText = "Кол-во";
+            this.Count.Name = "Count";
+            this.Count.ReadOnly = true;
+            // 
+            // SectionStatus
+            // 
+            this.SectionStatus.FillWeight = 105.5195F;
+            this.SectionStatus.HeaderText = "Разрез";
+            this.SectionStatus.Name = "SectionStatus";
+            this.SectionStatus.ReadOnly = true;
+            this.SectionStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // ImageColumn
+            // 
+            this.ImageColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ImageColumn.HeaderText = "Изображение";
+            this.ImageColumn.MinimumWidth = 10;
+            this.ImageColumn.Name = "ImageColumn";
+            this.ImageColumn.ReadOnly = true;
+            this.ImageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ImageColumn.Width = 83;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Column1";
+            this.Column1.Name = "Column1";
+            this.Column1.Visible = false;
             // 
             // btn_Check
             // 
@@ -172,16 +228,15 @@ namespace MOSTplugin.LintelBeam
             this.label_NoSection.AutoSize = true;
             this.label_NoSection.Location = new System.Drawing.Point(14, 10);
             this.label_NoSection.Name = "label_NoSection";
-            this.label_NoSection.Size = new System.Drawing.Size(35, 13);
+            this.label_NoSection.Size = new System.Drawing.Size(0, 13);
             this.label_NoSection.TabIndex = 4;
-            this.label_NoSection.Text = "label1";
             // 
             // btn_RefreshSectionView
             // 
             this.btn_RefreshSectionView.Enabled = false;
-            this.btn_RefreshSectionView.Location = new System.Drawing.Point(135, 517);
+            this.btn_RefreshSectionView.Location = new System.Drawing.Point(7, 50);
             this.btn_RefreshSectionView.Name = "btn_RefreshSectionView";
-            this.btn_RefreshSectionView.Size = new System.Drawing.Size(118, 39);
+            this.btn_RefreshSectionView.Size = new System.Drawing.Size(121, 28);
             this.btn_RefreshSectionView.TabIndex = 5;
             this.btn_RefreshSectionView.Text = "Обновить разрез";
             this.btn_RefreshSectionView.UseVisualStyleBackColor = true;
@@ -192,9 +247,8 @@ namespace MOSTplugin.LintelBeam
             this.label_SectionInvalid.AutoSize = true;
             this.label_SectionInvalid.Location = new System.Drawing.Point(14, 31);
             this.label_SectionInvalid.Name = "label_SectionInvalid";
-            this.label_SectionInvalid.Size = new System.Drawing.Size(13, 13);
+            this.label_SectionInvalid.Size = new System.Drawing.Size(0, 13);
             this.label_SectionInvalid.TabIndex = 4;
-            this.label_SectionInvalid.Text = "a";
             this.label_SectionInvalid.Click += new System.EventHandler(this.label_SectionInvalid_Click);
             // 
             // panel1
@@ -206,6 +260,7 @@ namespace MOSTplugin.LintelBeam
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1051, 57);
             this.panel1.TabIndex = 7;
+            this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
             // 
             // comboBox1
             // 
@@ -221,7 +276,6 @@ namespace MOSTplugin.LintelBeam
             this.panel2.BackColor = System.Drawing.Color.LightGray;
             this.panel2.Controls.Add(this.listBox1);
             this.panel2.Controls.Add(this.button4);
-            this.panel2.Controls.Add(this.btn_RefreshSectionView);
             this.panel2.Controls.Add(this.panel7);
             this.panel2.Controls.Add(this.panel6);
             this.panel2.Controls.Add(this.panel5);
@@ -235,10 +289,11 @@ namespace MOSTplugin.LintelBeam
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(32, 313);
+            this.listBox1.Location = new System.Drawing.Point(12, 424);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(120, 95);
             this.listBox1.TabIndex = 8;
+            this.listBox1.Visible = false;
             // 
             // button4
             // 
@@ -258,7 +313,7 @@ namespace MOSTplugin.LintelBeam
             this.panel7.Controls.Add(this.Rbtn_Mark_Manual);
             this.panel7.Controls.Add(this.btn_Remark);
             this.panel7.Controls.Add(this.button3);
-            this.panel7.Location = new System.Drawing.Point(12, 174);
+            this.panel7.Location = new System.Drawing.Point(12, 293);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(300, 106);
             this.panel7.TabIndex = 6;
@@ -278,6 +333,7 @@ namespace MOSTplugin.LintelBeam
             // Rbtn_Mark_Manual
             // 
             this.Rbtn_Mark_Manual.AutoSize = true;
+            this.Rbtn_Mark_Manual.Enabled = false;
             this.Rbtn_Mark_Manual.Location = new System.Drawing.Point(7, 31);
             this.Rbtn_Mark_Manual.Name = "Rbtn_Mark_Manual";
             this.Rbtn_Mark_Manual.Size = new System.Drawing.Size(118, 17);
@@ -293,7 +349,7 @@ namespace MOSTplugin.LintelBeam
             this.panel6.Controls.Add(this.label_SectionInvalid);
             this.panel6.Location = new System.Drawing.Point(12, 44);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(297, 59);
+            this.panel6.Size = new System.Drawing.Size(300, 135);
             this.panel6.TabIndex = 5;
             // 
             // panel5
@@ -302,9 +358,10 @@ namespace MOSTplugin.LintelBeam
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel5.Controls.Add(this.btn_CreateViewImage);
             this.panel5.Controls.Add(this.btn_CreateSectionView);
-            this.panel5.Location = new System.Drawing.Point(12, 109);
+            this.panel5.Controls.Add(this.btn_RefreshSectionView);
+            this.panel5.Location = new System.Drawing.Point(12, 185);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(300, 59);
+            this.panel5.Size = new System.Drawing.Size(300, 86);
             this.panel5.TabIndex = 2;
             // 
             // panel3
@@ -318,6 +375,16 @@ namespace MOSTplugin.LintelBeam
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(732, 573);
             this.panel3.TabIndex = 9;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(4, 4);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.TabIndex = 2;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // panel4
             // 
@@ -353,72 +420,6 @@ namespace MOSTplugin.LintelBeam
             this.скопироватьToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.скопироватьToolStripMenuItem.Text = "Скопировать";
             this.скопироватьToolStripMenuItem.Click += new System.EventHandler(this.скопироватьToolStripMenuItem_Click);
-            // 
-            // ItemSelection
-            // 
-            this.ItemSelection.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ItemSelection.FillWeight = 77.92208F;
-            this.ItemSelection.HeaderText = "";
-            this.ItemSelection.Name = "ItemSelection";
-            this.ItemSelection.Width = 20;
-            // 
-            // Code
-            // 
-            this.Code.FillWeight = 105.5195F;
-            this.Code.HeaderText = "Код";
-            this.Code.Name = "Code";
-            this.Code.ReadOnly = true;
-            // 
-            // Mark
-            // 
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            this.Mark.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Mark.FillWeight = 105.5195F;
-            this.Mark.HeaderText = "Марка";
-            this.Mark.Name = "Mark";
-            // 
-            // Count
-            // 
-            this.Count.FillWeight = 105.5195F;
-            this.Count.HeaderText = "Кол-во";
-            this.Count.Name = "Count";
-            this.Count.ReadOnly = true;
-            // 
-            // SectionStatus
-            // 
-            this.SectionStatus.FillWeight = 105.5195F;
-            this.SectionStatus.HeaderText = "Разрез";
-            this.SectionStatus.Name = "SectionStatus";
-            this.SectionStatus.ReadOnly = true;
-            this.SectionStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // ImageColumn
-            // 
-            this.ImageColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ImageColumn.HeaderText = "Изображение";
-            this.ImageColumn.MinimumWidth = 10;
-            this.ImageColumn.Name = "ImageColumn";
-            this.ImageColumn.ReadOnly = true;
-            this.ImageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ImageColumn.Width = 83;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Column1";
-            this.Column1.Name = "Column1";
-            this.Column1.Visible = false;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(4, 4);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(15, 14);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // LintelBeam
             // 
@@ -489,5 +490,6 @@ namespace MOSTplugin.LintelBeam
         private System.Windows.Forms.DataGridViewImageColumn ImageColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.CheckBox checkBox1;
+        
     }
 }

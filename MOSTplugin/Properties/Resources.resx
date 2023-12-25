@@ -118,14 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btn1_icn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn1_icn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="btn1_icon_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btn1_icon_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="btn1_icon_80x80" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\btn1_icon_80x80.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ImageNotExists" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-изображение-недоступно-48 (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -133,11 +127,17 @@
   <data name="ImageToUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-обновить-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="img2_LintelBeam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img2_LintelBeam.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_BIMcheck" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_BIMcheck.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="img_ListBtn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\imgonline-com-ua-Resize-qLMJCnZkDXF7.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\img_ListBtn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="img_SkittingWallBtn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\imgonline-com-ua-Resize-XfGs5MrczK1B2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\img_SkittingWallBtn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Microsoft_CSharp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Microsoft.CSharp.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

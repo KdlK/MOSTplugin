@@ -75,11 +75,22 @@
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
+    <Reference Include="VCRevitRibbonUtil">
+      <HintPath>.\VCRevitRibbonUtil.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase">
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DoorManager\Controller.cs" />
+    <Compile Include="DoorManager\ManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DoorManager\ManagerForm.Designer.cs">
+      <DependentUpon>ManagerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DoorManager\Models.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="Auto_renambering_lists.cs">
       <SubType>Form</SubType>
@@ -87,7 +98,8 @@
     <Compile Include="Auto_renambering_lists.Designer.cs">
       <DependentUpon>Auto_renambering_lists.cs</DependentUpon>
     </Compile>
-    <Compile Include="LintelBeam\Class1.cs" />
+    <Compile Include="DoorManager\StoredMarks.cs" />
+    <Compile Include="LintelBeam\StoredMarks.cs" />
     <Compile Include="LintelBeam\ErrorReview.cs" />
     <Compile Include="LintelBeam\Params.cs" />
     <Compile Include="LintelBeam\LintelBeam.cs">
@@ -103,6 +115,12 @@
     </Compile>
     <Compile Include="LintelBeam\Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LintelBeam\Warning.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LintelBeam\Warning.Designer.cs">
+      <DependentUpon>Warning.cs</DependentUpon>
     </Compile>
     <Compile Include="Peremichki.cs">
       <SubType>Form</SubType>
@@ -144,11 +162,17 @@
     <EmbeddedResource Include="Auto_renambering_lists.resx">
       <DependentUpon>Auto_renambering_lists.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DoorManager\ManagerForm.resx">
+      <DependentUpon>ManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LintelBeam\LintelBeam.resx">
       <DependentUpon>LintelBeam.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LintelBeam\Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LintelBeam\Warning.resx">
+      <DependentUpon>Warning.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Peremichki.resx">
       <DependentUpon>Peremichki.cs</DependentUpon>
@@ -176,11 +200,6 @@
     <None Include="Resources\btn1_icn.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\btn1_icon_32x32.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Логотип Мост. Синий. 300dpi.png" />
   </ItemGroup>
   <ItemGroup>
@@ -188,7 +207,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\" />
-    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\imgonline-com-ua-Resize-qLMJCnZkDXF7.jpg" />
@@ -207,6 +225,45 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\photo_2023-10-19_13-33-58 %281%29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Новый проект %281%29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Новый проект.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Артборд 1 %282%29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Safeimagekit-resized-img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Safeimagekit-resized-img %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Новый проект %284%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\сравнить изменения.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img2_LintelBeam.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img2_LintelBeam.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_BIMcheck.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_ListBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_SkittingWallBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btn1_icon_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

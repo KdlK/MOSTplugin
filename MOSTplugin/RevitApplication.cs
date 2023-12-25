@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
+using VCRevitRibbonUtil;
 using System.Windows.Media.Imaging;
 using System.Drawing.Imaging;
 using System.Windows.Media;
@@ -29,56 +29,96 @@ namespace MOSTplugin
 
         public Result OnStartup(UIControlledApplication application)
         {
-            application.CreateRibbonTab(tab_name);
-            RibbonPanel ribbonpanel = application.CreateRibbonPanel(tab_name, "Виды");
+            
             
 
-            PushButtonData button_rename_views = new PushButtonData(nameof(Commands), "переименовать \n виды", assembly_path, typeof(Commands).FullName);
+            //PushButtonData button_rename_views = new PushButtonData(nameof(Commands), "переименовать \n виды", assembly_path, typeof(Commands).FullName);
             Image img_button_rename_views = Properties.Resources.btn1_icon_32x32;
             ImageSource imgSRC_button_rename_views = Convert(img_button_rename_views);
-            button_rename_views.LargeImage = imgSRC_button_rename_views;
-            ribbonpanel.AddItem(button_rename_views);
+            //button_rename_views.LargeImage = imgSRC_button_rename_views;
+            //ribbonpanel.AddItem(button_rename_views);
 
-            RibbonPanel ribbonpanel2 = application.CreateRibbonPanel(tab_name, "Листы");
-            PushButtonData button_renumber_lists = new PushButtonData(nameof(Commands), "перенумеровать \n листы", assembly_path, typeof(Auto_numbering).FullName);
+            //RibbonPanel ribbonpanel2 = application.CreateRibbonPanel(tab_name, "Листы");
+            //PushButtonData button_renumber_lists = new PushButtonData(nameof(Commands), "перенумеровать \n листы", assembly_path, typeof(Auto_numbering).FullName);
             Image img_button_renumber_lists = Properties.Resources.img_ListBtn;
             ImageSource imgSRC_button_renumber_lists = Convert(img_button_renumber_lists);
-            button_renumber_lists.LargeImage = imgSRC_button_renumber_lists;
-            ribbonpanel2.AddItem(button_renumber_lists);
+            //button_renumber_lists.LargeImage = imgSRC_button_renumber_lists;
+            //ribbonpanel2.AddItem(button_renumber_lists);
 
-            /*
-                        RibbonPanel ribbonpanel3 = application.CreateRibbonPanel(tab_name, "Перемычки");
-                        PushButtonData button_peremichki = new PushButtonData(nameof(Commands), "перемычки", assembly_path, typeof(Peremichki_command).FullName);
-                        Image img_button_peremichki = Properties.Resources.btn1_icon_32x32;
-                        ImageSource imgSRC_button_peremichki = Convert(img_button_peremichki);
-                        button_peremichki.LargeImage = imgSRC_button_peremichki;
-                        ribbonpanel3.AddItem(button_peremichki);
-                        ribbonpanel.AddSeparator();
-            */
+            
 
-
-            RibbonPanel SkittingWall_panel = application.CreateRibbonPanel(tab_name, "Архитектура");
-            PushButtonData SkittingWall_btn = new PushButtonData(nameof(Commands), "Отделка", assembly_path, typeof(SkittingWall_command).FullName);
+            //RibbonPanel SkittingWall_panel = application.CreateRibbonPanel(tab_name, "Архитектура");
+            //PushButtonData SkittingWall_btn = new PushButtonData(nameof(Commands), "Отделка", assembly_path, typeof(SkittingWall_command).FullName);
             Image SkittingWaal_img = Properties.Resources.img_SkittingWallBtn;
             ImageSource SkittingWall_imgSRC = Convert(SkittingWaal_img);
-            SkittingWall_btn.LargeImage = SkittingWall_imgSRC; 
-            SkittingWall_panel.AddItem(SkittingWall_btn);
+            //SkittingWall_btn.LargeImage = SkittingWall_imgSRC; 
+            //SkittingWall_panel.AddItem(SkittingWall_btn);
 
-            RibbonPanel check_panel = application.CreateRibbonPanel(tab_name, "BIM");
-            PushButtonData check_btn = new PushButtonData(nameof(Commands), "Проверка", assembly_path, typeof(check).FullName);
-            Image check_img = Properties.Resources.img_SkittingWallBtn;
+            //RibbonPanel check_panel = application.CreateRibbonPanel(tab_name, "BIM");
+            //PushButtonData check_btn = new PushButtonData(nameof(Commands), "Проверка", assembly_path, typeof(check).FullName);
+            Image check_img = Properties.Resources.img_BIMcheck;
             ImageSource check_imgSRC = Convert(check_img);
-            check_btn.LargeImage = check_imgSRC;
-            check_panel.AddItem(check_btn);
+            //check_btn.LargeImage = check_imgSRC;
+            //check_panel.AddItem(check_btn);
+
+
+            //RibbonPanel LintelBeam_panel = application.CreateRibbonPanel(tab_name, "Перемчки");
+            //PushButtonData LintelBeam_btn = new PushButtonData(nameof(Commands), "Менеджер", assembly_path, typeof(Peremichki_command).FullName);
+            Image LintelBeam_img = Properties.Resources.img2_LintelBeam;
+            ImageSource LintelBeam_imgSRC = Convert(LintelBeam_img);
+            //LintelBeam_btn.LargeImage = LintelBeam_imgSRC;
 
 
 
+            //PushButton pushButton1 = SkittingWall_panel.AddItem(SkittingWall_btn) as PushButton;
+            //PushButton pushButton2 = LintelBeam_panel.AddItem(LintelBeam_btn) as PushButton;
+            Ribbon ribbon = new Ribbon(application);
+            ribbon.Tab("MOSTPlugin")
+                .Panel("Виды")
+                .CreateButton("btn1", // имя
+                             "Переименовать \nвиды", // текст кнопки
+                             typeof(Commands), // привязанная команда
+                             btn => btn
+                               .SetLargeImage(imgSRC_button_rename_views) // назначаем изображение
+                              )
+                .CreateButton("btn2", // имя
+                             "Перенумеровать \nлисты", // текст кнопки
+                             typeof(Auto_numbering), // привязанная команда
+                             btn => btn
+                               .SetLargeImage(imgSRC_button_renumber_lists) // назначаем изображение
+                              );
+                
+            ribbon.Tab("MOSTPlugin")
+               .Panel("Архитектура")
+               .CreateButton("btn3", // имя
+                             "Отделка", // текст кнопки
+                             typeof(SkittingWall_command), // привязанная команда
+                             btn => btn
+                               .SetLargeImage(SkittingWall_imgSRC) // назначаем изображение
+                              )
+               .CreateButton("btn4", // имя
+                             "Менеджер \nперемычек", // текст кнопки
+                             typeof(Peremichki_command), // привязанная команда
+                             btn => btn
+                               .SetLargeImage(LintelBeam_imgSRC) // назначаем изображение
+                              )
+               .CreateButton("btn_Doors",
+                                "Менеджер \n дверей",
+                                typeof(DoorManager_command),
+                                btn => btn.SetLargeImage(LintelBeam_imgSRC));
 
 
-            /*Uri button1_icon = new Uri(Path.Combine(Path.GetDirectoryName(assembly_path),"icons", "button1_icon.ico"));
-            BitmapImage btn1_icon = new BitmapImage(button1_icon);
-            button1.LargeImage = btn1_icon;
-            ribbonpanel.AddItem(button1);*/
+            ribbon.Tab("MOSTPlugin")
+                .Panel("BIM")
+                .CreateButton("btn5", // имя
+                             "Сравнение \nверсий", // текст кнопки
+                             typeof(check), // привязанная команда
+                             btn => btn
+                               .SetLargeImage(check_imgSRC) // назначаем изображение
+                              );
+
+
+
 
 
             return Result.Succeeded;

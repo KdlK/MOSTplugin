@@ -14,7 +14,7 @@ namespace MOSTplugin.LintelBeam
             { "Мелкие", new TableFormatSizes(50,100) },
             { "Средние", new TableFormatSizes(60,120) },
             { "Большие", new TableFormatSizes(150,300) },
-            { "Бошие", new TableFormatSizes(150,300) },
+            
 
 
 
@@ -42,6 +42,7 @@ namespace MOSTplugin.LintelBeam
         public static string LenghtParameterName = "ADSK_Размер_Длина";
         public static string IndentParameterName = "М_Перемычка_Отступ_фасадный";
         public static string OffsetParameterName = "М_Четверть_Разрез_Размер";
+        public static string ViewSectionTemplate = "Р_Р_Разрез перемычек";
     }
 
     public struct TableFormatSizes

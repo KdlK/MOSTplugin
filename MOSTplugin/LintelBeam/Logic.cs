@@ -107,7 +107,7 @@ namespace MOSTplugin.LintelBeam
 
 
 
-            return string.Format("{0}__{1}x{2}__{3}{4}__{5}", PType, WidthParameterValue?.ToString(), LenghtParameterValue?.ToString(), sub_mark, IndentParameterValue, IndentParameterValue);
+            return string.Format("{0}__{1}x{2}__{3}{4}__{5}", PType, WidthParameterValue?.ToString(), LenghtParameterValue?.ToString(), sub_mark, IndentParameterValue, OffsetParameterValue);
         }
         static public void CreateSectionView(Model model){
             Element el = model.LintelBeams.First();
@@ -119,21 +119,54 @@ namespace MOSTplugin.LintelBeam
       
             foreach (Element elem in ViewList) {
                 if (elem.Name == model.code) {
-                    Data.Doc.Delete(elem.Id);
+                    if (Data.UIdoc.ActiveView.Id == elem.Id) {
+                        UIView ViewToClose = (from UIView in Data.UIdoc.GetOpenUIViews()
+                                              where UIView.ViewId == Data.Doc.ActiveView.Id
+                                              select UIView).First();
+                        ViewToClose.Close();
+                        Data.Doc.Delete(elem.Id);
+                    }
+                    else
+                        Data.Doc.Delete(elem.Id);
                     break;
                 }
             
             }
             ViewSection viewSection = ViewSection.CreateSection(Data.Doc, viewFamilyTypes.First().Id, sectionBox);
+
             viewSection.Name = model.code;
             viewSection.DetailLevel = ViewDetailLevel.Fine;
-            viewSection.ViewTemplateId = new ElementId(925130);
-            
-            
-           
-            
+
+            List<View> ViewSectionTemplate_lst = (from view in new FilteredElementCollector(Data.Doc).OfClass(typeof(View)).Cast<View>()
+                                                  where view.Name == Params.ViewSectionTemplate && view.IsTemplate == true
+                                                  select view).ToList();
+            View ViewSectionTemplate = null;
+
+
+            if (ViewSectionTemplate_lst.Count() != 0)
+                ViewSectionTemplate = ViewSectionTemplate_lst.First();
+            if (ViewSectionTemplate == null)
+            {
+                View ViewSectionTemplate_ToCopy = (from view in new FilteredElementCollector(Data.Doc).OfClass(typeof(View)).Cast<View>()
+                                                 where view.IsTemplate == true
+                                                 select view).First();
+                ElementId SectionIdForTemplate = ViewSectionTemplate_ToCopy.Duplicate(ViewDuplicateOption.Duplicate);
+                ViewSectionTemplate = Data.Doc.GetElement(SectionIdForTemplate) as View;
+                ViewSectionTemplate.Name = Params.ViewSectionTemplate;
+
+                //SectionForTemplate.IsTemplate = true;
+
+
+
+            }
+            viewSection.ViewTemplateId = ViewSectionTemplate.Id;
+
+
+
+
 
         }
+        
         static public BoundingBoxXYZ SectionViewBB(Element el) {
             LocationPoint lp = el.Location as LocationPoint;
             XYZ XYZ_location = lp.Point;
@@ -167,7 +200,7 @@ namespace MOSTplugin.LintelBeam
             //sectionBox.Transform = RotateFlipType;
             
             sectionBox.Min = new XYZ(-0.19685*20, -0.049213*20, 0);
-            sectionBox.Max = new XYZ(0.029528 *20, 1, 2);
+            sectionBox.Max = new XYZ(0.029528*20, 1, 2);
             return sectionBox;
 
 
@@ -175,100 +208,104 @@ namespace MOSTplugin.LintelBeam
         }
         static public void CreateViewImage(Model model) {
             Transaction t = new Transaction(Data.Doc, "go");
-
-            Data.UIdoc.ActiveView = model.Section;
-            t.Start();
-            List<Element> ViewList = (from view in new FilteredElementCollector(Data.Doc).OfCategory(BuiltInCategory.OST_Views)
-                                      let v = view as View
-                                      where v.ViewType.ToString() == "Rendering"
-                                      select view).ToList();
-
-            foreach (Element elem in ViewList)
+            if(model?.Section != null)
             {
-                if (elem.Name == model.Section.Name)
+                Data.UIdoc.ActiveView = model.Section;
+                t.Start();
+                List<Element> ViewList = (from view in new FilteredElementCollector(Data.Doc).OfCategory(BuiltInCategory.OST_Views)
+                                          let v = view as View
+                                          where v.ViewType.ToString() == "Rendering"
+                                          select view).ToList();
+
+                foreach (Element elem in ViewList)
                 {
-                    Data.Doc.Delete(elem.Id);
-                    break;
+                    if (elem.Name == model.Section.Name)
+                    {
+                        Data.Doc.Delete(elem.Id);
+                        break;
+                    }
+
                 }
 
+                ImageExportOptions options = new ImageExportOptions()
+                {
+                    ViewName = model.Section.Name,
+
+
+                    HLRandWFViewsFileType = ImageFileType.JPEGLossless,
+                    ImageResolution = ImageResolution.DPI_600,
+                    ZoomType = ZoomFitType.Zoom,
+
+                    Zoom = 100
+
+
+
+
+                };
+
+                ElementId ImageId = Data.Doc.SaveToProjectAsImage(options);
+
+                ElementId RasterImageId = (from ImageType in new FilteredElementCollector(Data.Doc).OfClass(typeof(ImageType))
+                                           let name = ImageType.Name
+                                           where name == model.Section.Name
+                                           select ImageType.Id).First();
+
+
+                model.Image = Data.Doc.GetElement(ImageId) as ImageView;
+                foreach (Element el in model.LintelBeams)
+                {
+                    el.LookupParameter("Изображение").Set(RasterImageId);
+
+                }
+                t.Commit();
+                UIView ViewToClose = (from UIView in Data.UIdoc.GetOpenUIViews()
+                                      where UIView.ViewId == Data.Doc.ActiveView.Id
+                                      select UIView).First();
+                ViewToClose.Close();
+
             }
-
-            ImageExportOptions options = new ImageExportOptions()
-            {
-                ViewName = model.Section.Name,
-
-
-                HLRandWFViewsFileType = ImageFileType.JPEGLossless,
-                ImageResolution = ImageResolution.DPI_600,
-                ZoomType = ZoomFitType.Zoom,
-
-                Zoom = 100
-
-
-
-
-            };
             
-            ElementId ImageId =  Data.Doc.SaveToProjectAsImage(options);
-            
-            ElementId RasterImageId = (from ImageType in new FilteredElementCollector(Data.Doc).OfClass(typeof(ImageType)) let name = ImageType.Name
-                                                           where name == model.Section.Name
-                                                           select ImageType.Id).First();
-
-
-            model.Image = Data.Doc.GetElement(ImageId) as ImageView;
-            foreach (Element el in model.LintelBeams)
-            {
-                el.LookupParameter("Изображение").Set(RasterImageId);
-
-            }
-            t.Commit();
-            UIView ViewToClose = (from UIView in Data.UIdoc.GetOpenUIViews()
-                           where UIView.ViewId == Data.Doc.ActiveView.Id
-                           select UIView).First();
-            ViewToClose.Close();
-            
-
 
         }
         static public void SaveViewImage(Model model) {
 
             Transaction t = new Transaction(Data.Doc, "go");
-
-            Data.UIdoc.ActiveView = model.Image;
-            
-
-            ImageExportOptions options = new ImageExportOptions()
+            if (model?.Image != null)
             {
-                
-                FilePath = model.ImageFilePath,
+                Data.UIdoc.ActiveView = model.Image;
 
 
-                HLRandWFViewsFileType = ImageFileType.JPEGLossless,
-                ImageResolution = ImageResolution.DPI_600,
-                ZoomType = ZoomFitType.Zoom,
-                Zoom = 100,
-                
-                
+                ImageExportOptions options = new ImageExportOptions()
+                {
+
+                    FilePath = model.ImageFilePath,
 
 
-
-
-            };
-
-
-            Data.Doc.ExportImage(options);
+                    HLRandWFViewsFileType = ImageFileType.JPEGLossless,
+                    ImageResolution = ImageResolution.DPI_600,
+                    ZoomType = ZoomFitType.Zoom,
+                    Zoom = 100,
 
 
 
-            UIView ViewToClose = (from UIView in Data.UIdoc.GetOpenUIViews()
-                                  where UIView.ViewId == Data.Doc.ActiveView.Id
-                                  select UIView).First();
-            ViewToClose.Close();
-            
-           // Data.Doc.ExportImage(options);
 
 
+
+                };
+
+
+                Data.Doc.ExportImage(options);
+
+
+
+                UIView ViewToClose = (from UIView in Data.UIdoc.GetOpenUIViews()
+                                      where UIView.ViewId == Data.Doc.ActiveView.Id
+                                      select UIView).First();
+                ViewToClose.Close();
+
+                // Data.Doc.ExportImage(options);
+
+            }
 
         }
 
