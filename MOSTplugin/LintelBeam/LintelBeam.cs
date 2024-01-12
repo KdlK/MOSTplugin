@@ -18,7 +18,7 @@ using Color = System.Drawing.Color;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
-using Warning = MOSTplugin.LintelBeam.WarningForm;
+using Warning = MOSTplugin.Notifications.WarningForm;
 
 namespace MOSTplugin.LintelBeam
 {

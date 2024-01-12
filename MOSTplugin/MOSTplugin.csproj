@@ -34,11 +34,9 @@
     <Reference Include="PresentationCore" />
     <Reference Include="RevitAPI">
       <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPI.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
       <HintPath>C:\Program Files\Autodesk\Revit 2019\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="RevitTask, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RevitTask.3.0.0\lib\net47\RevitTask.dll</HintPath>
@@ -83,6 +81,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WindowManager\Controller.cs" />
+    <Compile Include="WindowManager\ManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowManager\ManagerForm.Designer.cs">
+      <DependentUpon>ManagerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WindowManager\Models.cs" />
+    <Compile Include="WindowManager\StoredMarks.cs" />
     <Compile Include="DoorManager\Controller.cs" />
     <Compile Include="DoorManager\ManagerForm.cs">
       <SubType>Form</SubType>
@@ -122,11 +129,42 @@
     <Compile Include="LintelBeam\Warning.Designer.cs">
       <DependentUpon>Warning.cs</DependentUpon>
     </Compile>
+    <Compile Include="Notifications\WarningForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Notifications\WarningForm.Designer.cs">
+      <DependentUpon>WarningForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Peremichki.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Peremichki.Designer.cs">
       <DependentUpon>Peremichki.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PinTabs\Class1.cs" />
+    <Compile Include="PinTabs\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PinTabs\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PinTabs\PinTabWarning.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PinTabs\PinTabWarning.Designer.cs">
+      <DependentUpon>PinTabWarning.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PinTabs\PinTabsEnd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PinTabs\PinTabsEnd.Designer.cs">
+      <DependentUpon>PinTabsEnd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PinTabs\PinTabsReview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PinTabs\PinTabsReview.Designer.cs">
+      <DependentUpon>PinTabsReview.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -162,6 +200,9 @@
     <EmbeddedResource Include="Auto_renambering_lists.resx">
       <DependentUpon>Auto_renambering_lists.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WindowManager\ManagerForm.resx">
+      <DependentUpon>ManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DoorManager\ManagerForm.resx">
       <DependentUpon>ManagerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -174,8 +215,23 @@
     <EmbeddedResource Include="LintelBeam\Warning.resx">
       <DependentUpon>Warning.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Notifications\WarningForm.resx">
+      <DependentUpon>WarningForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Peremichki.resx">
       <DependentUpon>Peremichki.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PinTabs\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PinTabs\PinTabWarning.resx">
+      <DependentUpon>PinTabWarning.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PinTabs\PinTabsEnd.resx">
+      <DependentUpon>PinTabsEnd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PinTabs\PinTabsReview.resx">
+      <DependentUpon>PinTabsReview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Rename_views.resx">
       <DependentUpon>Rename_views.cs</DependentUpon>
@@ -264,6 +320,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\btn1_icon_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\image_2023-12-26_10-56-35.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\image_2023-12-25_15-16-36.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Safeimagekit-resized-img %283%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

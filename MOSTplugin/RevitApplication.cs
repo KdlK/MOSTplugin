@@ -67,7 +67,16 @@ namespace MOSTplugin
             Image LintelBeam_img = Properties.Resources.img2_LintelBeam;
             ImageSource LintelBeam_imgSRC = Convert(LintelBeam_img);
             //LintelBeam_btn.LargeImage = LintelBeam_imgSRC;
-
+            Image DoorManager_img = Properties.Resources.img_DoorManager;
+            ImageSource DoorManager_imgSRC = Convert(DoorManager_img);
+            
+            
+            Image PinTabs_img = Properties.Resources.img_PinTabs;
+            ImageSource PinTabs_imgSRC = Convert(PinTabs_img);
+            
+            
+            Image RoomTag_img = Properties.Resources.img_RoomTag;
+            ImageSource RoomTag_imgSRC = Convert(RoomTag_img);
 
 
             //PushButton pushButton1 = SkittingWall_panel.AddItem(SkittingWall_btn) as PushButton;
@@ -103,9 +112,13 @@ namespace MOSTplugin
                                .SetLargeImage(LintelBeam_imgSRC) // назначаем изображение
                               )
                .CreateButton("btn_Doors",
-                                "Менеджер \n дверей",
+                                "Менеджер \nдверей",
                                 typeof(DoorManager_command),
-                                btn => btn.SetLargeImage(LintelBeam_imgSRC));
+                                btn => btn.SetLargeImage(DoorManager_imgSRC))
+               .CreateButton("btn_RoomTags",
+                                "Марки \nпомещений",
+                                typeof(PlaceRoomTag_command),
+                                btn => btn.SetLargeImage(RoomTag_imgSRC));
 
 
             ribbon.Tab("MOSTPlugin")
@@ -115,7 +128,13 @@ namespace MOSTplugin
                              typeof(check), // привязанная команда
                              btn => btn
                                .SetLargeImage(check_imgSRC) // назначаем изображение
-                              );
+                              )
+                .CreateButton("btn_PinTabs", // имя
+                             "Закрепить \nэлементы", // текст кнопки
+                             typeof(PinTabs_command), // привязанная команда
+                             btn => btn
+                               .SetLargeImage(PinTabs_imgSRC) // назначаем изображение
+                );
 
 
 

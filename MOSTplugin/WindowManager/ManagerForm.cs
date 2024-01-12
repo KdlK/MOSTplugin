@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Form = System.Windows.Forms.Form;
 
-namespace MOSTplugin.DoorManager
+namespace MOSTplugin.WindowManager
 {
     public partial class ManagerForm : Form
     {
@@ -42,8 +42,8 @@ namespace MOSTplugin.DoorManager
         }
 
         private void refresh() {
-            ModelDataDoors Data_Doors = new ModelDataDoors(); // создаем экземпляр класса, который собирает все нужные двери.
-            ModelList = Data_Doors.TableData; //из этого класса достаем то, что должно отображаться в форме, в таблице DGV
+            ModelDataWindows Data_Windows = new ModelDataWindows(); // создаем экземпляр класса, который собирает все нужные двери.
+            ModelList = Data_Windows.TableData; //из этого класса достаем то, что должно отображаться в форме, в таблице DGV
             
             
             dgv_Table.Rows.Clear();

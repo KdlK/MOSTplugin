@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autodesk.Revit.DB;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,18 +8,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Form = System.Windows.Forms.Form;
 
-namespace MOSTplugin.WindowManager
-{
-    public partial class WarningForm : Form
+namespace MOSTplugin.PinTabs
+
+{ 
+    public partial class PinTabWarning : Form
     {
-        public WarningForm()
+        public PinTabWarning()
         {
             
             InitializeComponent();
-            this.label1.Text = "Что - то пошло не так = (\nОбратитесь к ТИМ-Специалисту";
+            this.label1.Text = "ВНИМАНИЕ!!! Есть незакрепленные элементы!";
+            this.Refresh();
+
+
         }
 
+
+
+       
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();

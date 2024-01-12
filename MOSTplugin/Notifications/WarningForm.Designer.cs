@@ -1,4 +1,4 @@
-﻿namespace MOSTplugin.WindowManager
+﻿namespace MOSTplugin.Notifications
 {
     partial class WarningForm
     {

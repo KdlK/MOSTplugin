@@ -103,9 +103,39 @@ namespace MOSTplugin.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap img_DoorManager {
+            get {
+                object obj = ResourceManager.GetObject("img_DoorManager", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap img_ListBtn {
             get {
                 object obj = ResourceManager.GetObject("img_ListBtn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap img_PinTabs {
+            get {
+                object obj = ResourceManager.GetObject("img_PinTabs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap img_RoomTag {
+            get {
+                object obj = ResourceManager.GetObject("img_RoomTag", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

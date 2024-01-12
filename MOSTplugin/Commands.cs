@@ -18,6 +18,10 @@ using System.Windows.Forms.VisualStyles;
 using Form = System.Windows.Forms.Form;
 using MOSTplugin.DoorManager;
 using Model = MOSTplugin.DoorManager.Model;
+using Autodesk.Revit.UI.Selection;
+using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.Creation;
+using Document = Autodesk.Revit.DB.Document;
 
 namespace MOSTplugin
 {
@@ -117,7 +121,22 @@ namespace MOSTplugin
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             Data.CommandData = commandData;
-            DoorManager.WindowsManagerForm Form = new DoorManager.WindowsManagerForm();
+
+            DoorManager.ModelData mm = (DoorManager.ModelData)new DoorManager.ModelDataDoors(); 
+            DoorManager.ManagerForm Form = new DoorManager.ManagerForm(mm);
+
+            return Result.Succeeded;
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
+    public class WindowManager_command : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            Data.CommandData = commandData;
+            WindowManager.ModelData mm = (WindowManager.ModelData)new WindowManager.ModelDataDoors();
+            WindowManager.ManagerForm Form = new WindowManager.ManagerForm(mm);
 
             return Result.Succeeded;
         }
@@ -385,5 +404,136 @@ namespace MOSTplugin
         //}
     }
 
-   
+    [Transaction(TransactionMode.Manual)]
+    public class PinTabs_command : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            Data.CommandData = commandData;
+            List<BuiltInCategory> categories = new List<BuiltInCategory>()
+            {
+                BuiltInCategory.OST_Levels,
+                BuiltInCategory.OST_Grids,
+                BuiltInCategory.OST_RvtLinks
+            };
+            PinTabs.PinTab form = new PinTabs.PinTab(categories);
+            form.ShowDialog();
+
+
+            //Transaction t = new Transaction(Data.Doc, "Закрепить элементы");
+            //t.Start();
+            //string review = "";
+            //foreach (BuiltInCategory category in categories)
+            //{
+            //    string CategoryReview = "";
+            //    List<Element> elementList = new FilteredElementCollector(Data.Doc).OfCategory(category).WhereElementIsNotElementType().ToElements().ToList();
+            //    int PinnedElementsCounter = 0;
+            //    foreach (Element element in elementList)
+            //    {
+            //        try
+            //        {
+            //            element.Pinned = true;
+            //            PinnedElementsCounter++;
+            //        }
+            //        catch
+            //        {
+
+            //        }
+
+            //    }
+            //    string CategoryName = Category.GetCategory(Data.Doc, category).Name;
+            //    CategoryReview = String.Format("{0} \nКоличество в проекте: {1}\nЗакреплено: {2} \n-----------\n", CategoryName, elementList.Count(), PinnedElementsCounter);
+            //    review += CategoryReview;
+            //}
+            //t.Commit();
+            
+            
+            return Result.Succeeded;
+        }
+    }
+
+    [Transaction(TransactionMode.Manual)]
+    public class PlaceRoomTag_command : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            try
+            {
+                Data.CommandData = commandData;
+
+                List<Element> elems = (from elemId in Data.UIdoc.Selection.GetElementIds().ToList()
+                                       let elem = Data.Doc.GetElement(elemId)
+                                       where elem.Category.Id.IntegerValue == -2000279
+                                       select elem).ToList();
+                ElementFilter RoomTagsFilter = new ElementCategoryFilter(BuiltInCategory.OST_RoomTags);
+
+                Element viewType = (from elemId in new FilteredElementCollector(Data.Doc).OfCategory(BuiltInCategory.OST_RoomTags).WhereElementIsElementType().ToElementIds()
+                                    let elem = Data.Doc.GetElement(elemId)
+                                    where elem.Name == "Номер Площадь" && (elem as ElementType).FamilyName == "ADSK_Марка_Помещение_ДваЗначения"
+                                    select elem).ToList().First();
+
+
+
+
+                Transaction t = new Transaction(Data.Doc, "Расстановка марок помщений");
+                t.Start();
+                if (elems.Count == 0)
+                {
+                    Notifications.WarningForm form = new Notifications.WarningForm("Пожалуйста, выберите нужные виды \nв диспетчере проекта");
+                    form.ShowDialog();
+
+                }
+                else
+                {
+                    foreach (Element elem in elems)
+                    {
+                        try
+                        {
+                            List<Element> rooms = new FilteredElementCollector(Data.Doc, elem.Id).OfCategory(BuiltInCategory.OST_Rooms).WhereElementIsNotElementType().ToElements().ToList();
+                            foreach (Element room in rooms)
+                            {
+                                List<RoomTag> tags = (from dependetElementId in room.GetDependentElements(RoomTagsFilter).ToList()
+                                                      let dependetElement = Data.Doc.GetElement(dependetElementId)
+                                                      where (dependetElement as RoomTag).OwnerViewId == elem.Id
+                                                      select dependetElement as RoomTag).ToList();
+                                if (tags.Count == 0)
+                                {
+                                    //IndependentTag roomTag = IndependentTag.Create(
+                                    //Data.Doc,// The document
+                                    //viewType.Id,
+                                    //elem.Id, // The id of the view where the tag will be placed
+                                    //new Reference(room), // The reference to the room element
+                                    //false, // Whether to add a leader line to the tag
+
+                                    //TagOrientation.Horizontal, // The tag orientation
+                                    //((room as SpatialElement).Location as LocationPoint).Point // The location of the tag
+                                    //);
+                                    
+                                    XYZ roomLocation = ((room as SpatialElement).Location as LocationPoint).Point;
+
+                                    UV TagLocation = new UV(roomLocation.X, roomLocation.Y);
+                                    Data.Doc.Create.NewRoomTag(new LinkElementId(room.Id), TagLocation, elem.Id);
+
+
+
+
+                                }
+
+
+
+                            }
+                        }
+                        catch { }
+                    }
+
+                }
+                t.Commit();
+            }
+            catch { }
+
+
+            return Result.Succeeded;
+        }
+    }
+
 }

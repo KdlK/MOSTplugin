@@ -1,4 +1,4 @@
-﻿namespace MOSTplugin.DoorManager
+﻿namespace MOSTplugin.WindowManager
 {
     partial class ManagerForm
     {
